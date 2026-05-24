@@ -1,0 +1,18 @@
+{
+  "$schema": "https://railway.app/railway.schema.json",
+  "build": {
+    "builder": "NIXPACKS",
+    "nixpacksPlan": {
+      "providers": [],
+      "phases": {
+        "setup": {
+          "pkgs": ["deno"]
+        }
+      }
+    }
+  },
+  "deploy": {
+    "startCommand": "deno run --allow-net --allow-env main.ts",
+    "restartPolicyType": "ON_FAILURE"
+  }
+}
