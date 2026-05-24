@@ -1,18 +1,15 @@
-{
-  "$schema": "https://railway.app/railway.schema.json",
-  "build": {
-    "builder": "NIXPACKS",
-    "nixpacksPlan": {
-      "providers": [],
-      "phases": {
-        "setup": {
-          "pkgs": ["deno"]
-        }
-      }
-    }
-  },
-  "deploy": {
-    "startCommand": "deno run --allow-net --allow-env main.ts",
-    "restartPolicyType": "ON_FAILURE"
-  }
-}
+FROM denoland/deno:alpine-2.1.4
+
+# I-set ang working directory sa loob ng container
+WORKDIR /app
+
+# I-cache muna ang dependencies para mabilis ang susunod na builds
+# (Kahit walang hiwalay na deps file, maganda itong practice)
+COPY main.ts .
+RUN deno cache main.ts
+
+# Siguraduhing nakikinig sa port na ibibigay ng Railway
+EXPOSE 8080
+
+# Patakbuhin ang Deno app gamit ang kinakailangang permissions
+CMD ["run", "--allow-net", "--allow-env", "main.ts"]
